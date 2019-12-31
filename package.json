@@ -1,20 +1,23 @@
 {
   "name": "vaanilai-server",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actionanand/vaanavil-server.git"
+    "url": "git+https://github.com/actionanand/vaanilai-server.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Anand Raja",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/actionanand/vaanavil-server/issues"
+    "url": "https://github.com/actionanand/vaanilai-server/issues"
   },
-  "homepage": "https://github.com/actionanand/vaanavil-server#readme"
+  "homepage": "https://github.com/actionanand/vaanilai-server#readme",
+  "description": "It's a basic weather app using express js. vaanilai(வானிலை) means weather in Tamil(தமிழ்).",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
