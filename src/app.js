@@ -2,6 +2,9 @@ const path = require('path');
 const express = require('express');
 const hbs = require('hbs');
 
+const geoCode = require('./utils/geocode');
+const forecast = require('./utils/forecast');
+
 const app = express();
 
 const publicDir = path.join(__dirname, '../public');
@@ -37,15 +40,33 @@ app.get('/help', (req, res) => {
 });
 
 app.get('/weather', (req, res) => {
-    res.send({
-        forecast: 'It is raining.',
-        location: 'Chennai'
+
+    if (!req.query.address) {
+        return res.send({
+            error: 'You must provide the location'
+        });
+    }
+
+    geoCode(req.query.address, (error, {lat, lng, location}) => {
+        if (error) {
+            return res.send(error);
+        }
+        forecast(lat, lng, (error, respData) => {
+            if (error) {
+                return res.send(error);
+            }
+            res.send({
+                forecast: respData,
+                location,
+                address: req.query.address
+            });
+        });
     });
 });
 
 app.get('/help/*', (req, res) => {
     res.render('404', {
-        title: `404 Page`,
+        title: '404 Page',
         name: 'Anand',
         message: 'Requested help content is not found!'
     })
@@ -55,7 +76,7 @@ app.get('*', (req, res) => {
     res.render('404', {
         title: '404 Page',
         name: 'name',
-        message: 'Requested page is not found!'
+        message: 'localhost:3000' + req.url + ' is not found!'
     })
 });
 
