@@ -18,6 +18,7 @@
   "homepage": "https://github.com/actionanand/vaanilai-server#readme",
   "description": "It's a basic weather app using express js. vaanilai(வானிலை) means weather in Tamil(தமிழ்).",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "hbs": "^4.0.6"
   }
 }
