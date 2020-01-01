@@ -47,13 +47,13 @@ app.get('/weather', (req, res) => {
         });
     }
 
-    geoCode(req.query.address, (error, {lat, lng, location}) => {
+    geoCode(req.query.address, (error, {lat, lng, location}={}) => {
         if (error) {
-            return res.send(error);
+            return res.send({error});
         }
         forecast(lat, lng, (error, respData) => {
             if (error) {
-                return res.send(error);
+                return res.send({error});
             }
             res.send({
                 forecast: respData,
