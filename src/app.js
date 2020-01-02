@@ -20,21 +20,21 @@ app.use(express.static(publicDir));
 app.get('', (req, res) => {
     res.render('index', {
         title: 'Weather',
-        name: 'Anand'
+        name: 'Anand Raja'
     });
 });
 
 app.get('/about', (req, res) => {
     res.render('about', {
-        title: `it's about page!`,
-        name: 'Anand'
+        title: `About me`,
+        name: 'Anand Raja'
     });
 });
 
 app.get('/help', (req, res) => {
     res.render('help', {
-        title: `It's a help page.`,
-        name: 'Anand',
+        title: `Help Page`,
+        name: 'Anand Raja',
         helpText: 'You can approach us anytime.'
     });
 });
@@ -43,7 +43,7 @@ app.get('/weather', (req, res) => {
 
     if (!req.query.address) {
         return res.send({
-            error: 'You must provide the location'
+            error: 'You must provide the location!'
         });
     }
 
@@ -51,31 +51,38 @@ app.get('/weather', (req, res) => {
         if (error) {
             return res.send({error});
         }
-        forecast(lat, lng, (error, respData) => {
+console.log(req.url);
+        forecast(lat, lng, req.query.units, (error, respData) => {
             if (error) {
                 return res.send({error});
             }
             res.send({
-                forecast: respData,
+                tempInfo: forecastInfo.tempInfo,
+                currentTemp: forecastInfo.currentTemp,
+                summary: forecastInfo.summary,
+                solarInfo: forecastInfo.solarInfo,
+                rain: forecastInfo.rain,
+                time: forecastInfo.time,
                 location,
+                otherInfo: forecastInfo.otherInfo,
                 address: req.query.address
             });
         });
     });
 });
 
-app.get('/help/*', (req, res) => {
-    res.render('404', {
-        title: '404 Page',
-        name: 'Anand',
-        message: 'Requested help content is not found!'
-    })
-});
+// app.get('/help/*', (req, res) => {
+//     res.render('404', {
+//         title: '404 Page',
+//         name: 'Anand',
+//         message: 'Requested help content is not found!'
+//     })
+// });
 
 app.get('*', (req, res) => {
     res.render('404', {
         title: '404 Page',
-        name: 'name',
+        name: 'Anand Raja',
         message: 'localhost:3000' + req.url + ' is not found!'
     })
 });
