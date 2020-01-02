@@ -6,6 +6,7 @@ const geoCode = require('./utils/geocode');
 const forecast = require('./utils/forecast');
 
 const app = express();
+const port = process.env.PORT || 3000;
 
 const publicDir = path.join(__dirname, '../public');
 const viewPath = path.join(__dirname, '../templates/views');
@@ -83,10 +84,10 @@ app.get('*', (req, res) => {
     res.render('404', {
         title: '404 Page',
         name: 'Anand Raja',
-        message: 'localhost:3000' + req.url + ' is not found!'
+        message: 'https://vaanilai.herokuapp.com' + req.url + ' is not found!'
     })
 });
 
-app.listen(3000, () => {
-    console.log('Server is up!');
+app.listen(port, () => {
+    console.log('Server is up at '+port);
 });
