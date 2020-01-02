@@ -52,7 +52,7 @@ app.get('/weather', (req, res) => {
         if (error) {
             return res.send({error});
         }
-console.log(req.url);
+// console.log(req.url);
         forecast(lat, lng, req.query.units, (error, respData) => {
             if (error) {
                 return res.send({error});

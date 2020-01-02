@@ -15,8 +15,9 @@ const forecast = (lat, lng, tempUnit='ca', callback) => {
             summary = today.summary;
             currentTemp = now.temperature;
             rain = +now.precipProbability*100;
-            sunRise = new Date(today.sunriseTime*1000).toLocaleTimeString();
-            sunSet = new Date(today.sunsetTime*1000).toLocaleTimeString();
+            sunRise = new Date(today.sunriseTime*1000).toLocaleTimeString('en-US', {timeZone: body.timezone});
+            sunSet = new Date(today.sunsetTime*1000).toLocaleTimeString('en-US', {timeZone: body.timezone});
+            // console.log(body.timezone);
 
             if(tempUnit == 'ca') {
                 deg = '\xB0C';
@@ -27,13 +28,14 @@ const forecast = (lat, lng, tempUnit='ca', callback) => {
                 speed = `m/h`;
                 dist = 'miles'
             }
+
             forecastInfo = {
                 tempInfo: `Feels like ${currentTemp} ${deg}, High: ${today.temperatureHigh} ${deg} Low: ${today.temperatureLow} ${deg}`,
                 currentTemp: `${currentTemp} ${deg} ${now.summary}`,
                 summary,
                 solarInfo: `Sun rise: ${sunRise} | Sun set: ${sunSet}`,
                 rain: `There is ${rain}% posibility for rain.`,
-                time: `${new Date(now.time*1000).toLocaleTimeString()} ${new Date(now.time*1000).toLocaleDateString("en-US", options)}`,
+                time: `${new Date(now.time*1000).toLocaleTimeString('en-US', {timeZone: body.timezone})} ${new Date(now.time*1000).toLocaleDateString("en-US", {timeZone: body.timezone}, options)}`,
                 otherInfo: `Humidity: ${Math.round(now.humidity*100)} %, Dew point: ${now.dewPoint} ${deg}, Pressure: ${now.pressure} hPa,
                  Wind speed: ${now.windSpeed} ${speed}, UV Index: ${now.uvIndex}, Visibility: ${Math.round(now.visibility)} ${dist}`
             }
