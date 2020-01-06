@@ -4,6 +4,7 @@ const hbs = require('hbs');
 
 const geoCode = require('./utils/geocode');
 const forecast = require('./utils/forecast');
+const aqi = require('./utils/aqi');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -22,6 +23,13 @@ app.get('', (req, res) => {
     res.render('index', {
         title: 'Weather',
         name: 'Anand Raja'
+    });
+});
+
+app.get('/aqi', (req, res) => {
+    res.render('aqi', {
+        title: `Air Quality Index`,
+        name: 'Anand Raja',
     });
 });
 
@@ -72,6 +80,31 @@ app.get('/weather', (req, res) => {
     });
 });
 
+app.get('/aqi-api', (req, res) => {
+    if (!req.query.address) {
+        return res.send({
+            error: 'You must provide the location!'
+        });
+    }
+
+    geoCode(req.query.address, (error, {lat, lng}={}) => {
+        if (error) {
+            return res.send({error});
+        }
+        aqi(lat, lng, (error, respData) => {
+            if(error) {
+                return res.send({error});
+            }
+            res.send({
+                aqi: respData.aqi,
+                summary: respData.summary,
+                place: respData.place,
+                otherAqi: respData.otherAqi
+            });
+        });
+    });
+});
+
 // app.get('/help/*', (req, res) => {
 //     res.render('404', {
 //         title: '404 Page',
@@ -79,6 +112,7 @@ app.get('/weather', (req, res) => {
 //         message: 'Requested help content is not found!'
 //     })
 // });
+
 
 app.get('*', (req, res) => {
     res.render('404', {
