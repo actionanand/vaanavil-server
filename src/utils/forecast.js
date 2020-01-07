@@ -36,8 +36,7 @@ const forecast = (lat, lng, tempUnit='ca', callback) => {
                 solarInfo: `Sun rise: ${sunRise} | Sun set: ${sunSet}`,
                 rain: `There is ${rain}% posibility for rain.`,
                 time: `${new Date(now.time*1000).toLocaleTimeString('en-US', {timeZone: body.timezone})} ${new Date(now.time*1000).toLocaleDateString("en-US", {timeZone: body.timezone}, options)}`,
-                otherInfo: `Humidity: ${Math.round(now.humidity*100)} %, Dew point: ${now.dewPoint} ${deg}, Pressure: ${now.pressure} hPa,
-                 Wind speed: ${now.windSpeed} ${speed}, UV Index: ${now.uvIndex}, Visibility: ${Math.round(now.visibility)} ${dist}`
+                otherInfo: `Humidity: ${Math.round(now.humidity*100)} %, Dew point: ${now.dewPoint} ${deg}, Pressure: ${now.pressure} hPa, Wind speed: ${now.windSpeed} ${speed}, UV Index: ${now.uvIndex}, Visibility: ${Math.round(now.visibility)} ${dist}`
             }
             
             callback(undefined, forecastInfo);
